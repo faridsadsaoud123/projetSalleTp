@@ -15,9 +15,9 @@ class SalleController extends AbstractController
 {
     public function accueil(Session $session)
     {
-        if ($session->has('nbreFois'))
+        if ($session->has('nbreFois')) {
             $session->set('nbreFois', $session->get('nbreFois') + 1);
-        else
+        } else
             $session->set('nbreFois', 1);
         return $this->render(
             'salle/accueil.html.twig',
