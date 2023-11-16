@@ -1,3 +1,6 @@
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\DefaultController::
+salle_tp:
+  resource: routes/salle/routes.yaml
+  prefix: /salle

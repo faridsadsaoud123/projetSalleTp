@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <body>
+    <h2>ajouter une salle</h2>
+    {{ form(monFormulaire) }}
+    <p>
+<ul> message :
+{% for message in app.session.flashbag.get('infoAjout') %}
+<li>{{ message }}</li>
+{% endfor %}
+</ul>
+</p>
+    </body>
+</html>
