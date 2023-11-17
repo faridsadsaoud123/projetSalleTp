@@ -1,11 +1,19 @@
 {% extends "layoutgeneral.html.twig" %}
-    {% block titre %}
-        {{ parent() }} : Salle (id={{ salle.id }})
-    {% endblock %}
+{% block titre %}
+	{{ parent() }}
+	: Salle (id={{ salle.id }})
+{% endblock %}
 {% block contenu %}
-    <ul>
-        <li>batiment {{ salle.batiment }}</li>
-        <li>etage {{ salle.etage }}</li>
-        <li>numero {{ salle.numero }}</li>
-    </ul>
-{% endblock %}  
+	<ul>
+		<li>batiment
+			{{ salle.batiment }}</li>
+		<li>etage
+			{{ salle.etage }}</li>
+		<li>numero
+			{{ salle.numero }}</li>
+	</ul>
+	<p>
+		<a href="{{ path('salle_tp_modifier', { 'id': salle.id }) }}">
+			modifier la salle</a>
+	</p>
+{% endblock %}

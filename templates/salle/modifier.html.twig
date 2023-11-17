@@ -1,9 +1,12 @@
 {% extends "layoutgeneral.html.twig" %}
 {% block titre %}
 	{{ parent() }}
-	- ajouter une salle
+	- modifier une salle
 {% endblock %}
 {% block contenu %}
-	<h3>renseigner les champs ci-dessous</h3>
 	{% include "salle/formulaire.html.twig" %}
+	<p>Attention ! vous modifiez une salle existante.</p>
+	<p>
+		<a href="{{ path('salle_tp_accueil') }}">Abandonner</a>
+	</p>
 {% endblock %}
