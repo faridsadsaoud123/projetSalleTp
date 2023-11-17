@@ -106,6 +106,15 @@ class SalleController extends AbstractController
             array('monFormulaire' => $form->createView())
         );
     }
+    public function navigation()
+    {
+        $salles = $this->getDoctrine()
+            ->getRepository(Salle::class)->findAll();
+        return $this->render(
+            'salle/navigation.html.twig',
+            array('salles' => $salles)
+        );
+    }
     // public function dix()
     // {
     //     return $this->redirectToRoute('salle_tp_afficher', array('numero' => 10));
