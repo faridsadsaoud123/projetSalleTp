@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Salle;
+use App\Entity\Ordinateur;
 
 class EssaiController extends AbstractController
 {
@@ -195,5 +196,49 @@ class EssaiController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('salle_tp_voir',
         array('id' => $salle->getId()));
+        }
+    public function test25() {
+        $em = $this->getDoctrine()->getManager();
+        $salle = $em->getRepository(Salle::class)->findOneBy(array('batiment'=>'D',
+        'etage'=>1, 'numero'=>15));
+        $ordi = new Ordinateur;
+        $ordi->setNumero(702);
+        $ordi->setIp('192.168.7.04');
+        $ordi->setSalle($salle);
+        $em->persist($ordi);
+        $em->flush();
+        dump($ordi);
+        return new Response('<html><body></body></html>');
+        }
+    public function test26() {
+        $em = $this->getDoctrine()->getManager();
+        $salle = new Salle;
+        $salle->setBatiment('B');
+        $salle->setEtage(0);
+        $salle->setNumero(0);
+        $ordi = new Ordinateur;
+        $ordi->setNumero(701);
+        $ordi->setIp('192.168.7.01');
+        $ordi->setSalle($salle);
+        $em->persist($ordi);
+        $em->persist($salle);
+        $em->flush();
+        dump($ordi);
+        return new Response('<html><body></body></html>');
+        }
+    public function test27() {
+        $em = $this->getDoctrine()->getManager();
+        $salle = new Salle;
+        $salle->setBatiment('B');
+        $salle->setEtage(0);
+        $salle->setNumero(1);
+        $ordi = new Ordinateur;
+        $ordi->setNumero(703);
+        $ordi->setIp('192.168.7.05');
+        $ordi->setSalle($salle);
+        $em->persist($ordi);
+        $em->flush();
+        dump($ordi);
+        return new Response('<html><body></body></html>');
         }
 }

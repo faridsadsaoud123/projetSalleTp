@@ -20,6 +20,9 @@ class Ordinateur
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $numero = null;
 
+    #[ORM\ManyToOne(cascade: ["persist"])]
+    private ?Salle $salle = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Ordinateur
     public function setNumero(?int $numero): static
     {
         $this->numero = $numero;
+
+        return $this;
+    }
+
+    public function getSalle(): ?Salle
+    {
+        return $this->salle;
+    }
+
+    public function setSalle(?Salle $salle): static
+    {
+        $this->salle = $salle;
 
         return $this;
     }
