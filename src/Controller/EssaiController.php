@@ -115,4 +115,85 @@ class EssaiController extends AbstractController
             . $repo->find($id) . '<br />' . 'contains(salle):' . $em->contains($salle);
         return new Response("<html><body>$result</body></html>");
     }
+    public function test6() {
+        $repo = $this->getDoctrine()->getRepository(Salle::class);
+        $salle = $repo->find(1);
+        dump($salle);
+        return new Response('<html><body></body></html>');
+        }
+    public function test7() {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $salles = $repo->findAll();
+        dump($salles);
+        return new Response('<html><body></body></html>');
+    }
+    public function test8() {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $salles = $repo->findBy(array('etage'=>1),
+        array('numero'=>'asc'), 2, 1);
+        dump($salles);
+        return new Response('<html><body></body></html>');
+    }
+    public function test9() {
+        $repo = $this->getDoctrine()->getManager()
+        ->getRepository(Salle::class);
+        $salle = $repo->findOneBy(array('etage'=>1));
+        dump($salle);
+        return new Response('<html><body></body></html>');
+    }
+    public function test10() {
+        $repo = $this->getDoctrine()->getManager()
+        ->getRepository(Salle::class);
+        $salles = $repo->findByBatiment('B');
+        dump($salles);
+        return new Response('<html><body></body></html>');
+    }
+    public function test11() {
+        $repo = $this->getDoctrine()->getManager()
+        ->getRepository(Salle::class);
+        $salle = $repo->findOneByEtage(1);
+        dump($salle);
+        return new Response('<html><body></body></html>');
+    }
+    public function test12() {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $salles = $repo->findByBatimentAndEtageMax('D', 7);
+        dump($salles);
+        return new Response('<html><body></body></html>');
+    }
+    public function test13() {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $salles = $repo->findSalleBatAouB();
+        dump($salles);
+        return new Response('<html><body></body></html>');
+    }
+    public function test14() {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $result = $repo->plusUnEtage();
+        return new Response('<html><body><a href="http://localhost/phpmyadmin">
+        voir phpmyadmin</a></body></html>');
+    }
+    public function test16(){
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $result = $repo->testGetResult();
+        dump($result);
+        return new Response('<html><body></body></html>');
+    }
+    public function test19() {
+        $repo = $this->getDoctrine()->getManager()->getRepository(Salle::class);
+        $result = $repo->testGetSingleScalarResult();
+        dump($result);
+        return new Response('<html><body></body></html>');
+    }
+    public function test23() {
+        $em = $this->getDoctrine()->getManager();
+        $salle = new Salle;
+        $salle->setBatiment('b'); // minuscule !
+        $salle->setEtage(3);
+        $salle->setNumero(63);
+        $em->persist($salle);
+        $em->flush();
+        return $this->redirectToRoute('salle_tp_voir',
+        array('id' => $salle->getId()));
+        }
 }

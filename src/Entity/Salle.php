@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Salle
 {
     #[ORM\Id]
@@ -29,7 +30,11 @@ class Salle
     #[Assert\LessThanOrEqual(value: 80, message: "la valeur doit être <=
     {{ compared_value }}")]
     private ?int $numero = null;
-
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function corrigeNomBatiment() {
+        $this->batiment = strtoupper($this->batiment);
+    }
     public function getId(): ?int
     {
         return $this->id;

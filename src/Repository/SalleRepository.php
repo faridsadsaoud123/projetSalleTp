@@ -6,6 +6,7 @@ use App\Entity\Salle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<Salle>
  *
@@ -20,6 +21,55 @@ class SalleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Salle::class);
     }
+   
+    public function add(Salle $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+    public function remove(Salle $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+    public function findByBatimentAndEtageMax($batiment, $etage) {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->where('s.batiment = :batiment')
+        ->setParameter('batiment', $batiment)
+        ->andWhere('s.etage <= :etage')
+        ->setParameter('etage', $etage)
+        ->orderBy('s.etage', 'asc');
+        return $queryBuilder->getQuery()->getResult();
+    }
+    public function findSalleBatAouB() {
+        $query = $this->getEntityManager()
+        ->createQuery("SELECT s FROM App\Entity\Salle s
+        WHERE s.batiment IN ('A', 'B')");
+        return $query->getResult();
+    }
+    public function plusUnEtage() {
+        $query = $this->getEntityManager()
+        ->createQuery("UPDATE App\Entity\Salle s
+        SET s.numero = s.numero + '1'");
+        return $query->execute();
+    }
+    public function testGetResult() {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->where("s.batiment = 'B'");
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+        }
+    public function testGetSingleScalarResult() {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->select('COUNT(s)');
+        $queryBuilder->where("s.batiment = 'B'");
+        $query = $queryBuilder->getQuery();
+        return $query->getSingleScalarResult();
+        }
 
 //    /**
 //     * @return Salle[] Returns an array of Salle objects
