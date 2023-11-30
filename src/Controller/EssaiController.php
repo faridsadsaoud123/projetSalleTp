@@ -241,4 +241,14 @@ class EssaiController extends AbstractController
         dump($ordi);
         return new Response('<html><body></body></html>');
         }
+    public function test28() {
+        $ordi = $this->getDoctrine()->getManager()
+        ->getRepository(Ordinateur::class)
+        ->findOneByNumero(703);
+        dump($ordi);
+        $batiment = $ordi->getSalle()->getBatiment();
+        dump($batiment);
+        dump($ordi);
+        return new Response('<html><body></body></html>');
+    }
 }
