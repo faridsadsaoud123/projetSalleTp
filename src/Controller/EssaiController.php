@@ -251,4 +251,38 @@ class EssaiController extends AbstractController
         dump($ordi);
         return new Response('<html><body></body></html>');
     }
+    public function test29() {
+        $em = $this->getDoctrine()->getManager();
+        $ordi = new Ordinateur;
+        $ordi->setNumero(803);
+        $ordi->setIp('192.168.8.03');
+        $salle = new Salle ;
+        $salle->setBatiment('D');
+        $salle->setEtage(8);
+        $salle->setNumero(03);
+        $salle->addOrdinateur($ordi);
+        $em->persist($ordi);
+        $em->flush();
+        $ordi = $salle = null;
+        $ordi = $this->getDoctrine()->getManager()
+        ->getRepository(Ordinateur::class)->findOneByNumero(803);
+        dump($ordi);
+        return new Response('<html><body></body></html>');
+        }
+    public function test30() {
+        $em = $this->getDoctrine()->getManager();
+        $ordi = new Ordinateur;
+        $ordi->setNumero(804);
+        $ordi->setIp('192.168.8.04');
+        $em->persist($ordi);
+        $salle = new Salle ;
+        $salle->setBatiment('D');
+        $salle->setEtage(8);
+        $salle->setNumero(8);
+        $salle->addOrdinateur($ordi);
+        $em->persist($salle);
+        $em->flush();
+        dump($ordi);
+        return new Response('<html><body></body></html>');
+        }
 }
